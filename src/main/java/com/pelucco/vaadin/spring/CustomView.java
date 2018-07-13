@@ -1,5 +1,6 @@
 package com.pelucco.vaadin.spring;
 
+import com.pelucco.vaadin.spring.components.MyCustomComponent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,10 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CustomView extends VerticalLayout {
 
     public CustomView(@Autowired ExampleTemplate template) {
-        // This is just a simple label created via Elements API
-        Button button = new Button("Click me", event -> template.setValue("Clicked!"));
-        // This is a simple template example
-        add(button, template);
+
+        MyCustomComponent comp = new MyCustomComponent("this is my value 3");
+        add(comp);
         setClassName("main-layout");
 
     }
