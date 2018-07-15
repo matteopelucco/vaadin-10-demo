@@ -14,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route("custom")
 public class CustomView extends VerticalLayout {
 
-    public CustomView(@Autowired ExampleTemplate template) {
+    public CustomView() {
 
         MyCustomComponent comp = new MyCustomComponent("this is my value 3");
+
         add(comp);
         setClassName("main-layout");
 
