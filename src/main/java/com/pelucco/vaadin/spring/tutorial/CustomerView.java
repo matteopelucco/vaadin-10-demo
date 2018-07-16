@@ -18,13 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route("tutorial")
 public class CustomerView extends VerticalLayout {
 
-    CustomerService customerService;
-
-    // grid
+    private CustomerService customerService;
     private Grid<Customer> grid = new Grid<>();
-
-    // search input
-    private TextField filterText = new TextField();
+    private TextField filterInput = new TextField();
+    private Button clearBtn = new Button();
+    private Button addBtn = new Button();
 
     private CustomerForm form = new CustomerForm(this);
 
@@ -32,47 +30,48 @@ public class CustomerView extends VerticalLayout {
 
         this.customerService = customerService;
 
-
         grid.setSizeFull();
-
         grid.addColumn(Customer::getFirstName).setHeader("First name");
         grid.addColumn(Customer::getLastName).setHeader("Last name");
         grid.addColumn(Customer::getStatus).setHeader("Status");
 
-        filterText.setPlaceholder("Filter by name...");
-        filterText.setValueChangeMode(ValueChangeMode.EAGER);
-        filterText.addValueChangeListener(e -> updateList());
+        filterInput.setPlaceholder("Filter by name...");
+        filterInput.setValueChangeMode(ValueChangeMode.EAGER);
+        filterInput.addValueChangeListener(e -> updateList());
 
-        Button clearFilterTextBtn = new Button(new Icon(VaadinIcon.CLOSE_CIRCLE));
-        clearFilterTextBtn.addClickListener(e -> filterText.clear());
+        clearBtn.setIcon(new Icon(VaadinIcon.CLOSE_CIRCLE));
+        clearBtn.addClickListener(e -> filterInput.clear());
 
-        HorizontalLayout filtering = new HorizontalLayout(filterText, clearFilterTextBtn);
-
-        Button addCustomerBtn = new Button("Add new customer");
-        addCustomerBtn.addClickListener(e -> {
+        addBtn.setText("Add new customer");
+        addBtn.addClickListener(e -> {
             grid.asSingleSelect().clear();
             form.setCustomer(new Customer());
         });
-
-
-        HorizontalLayout toolbar = new HorizontalLayout(filtering, addCustomerBtn);
-
-        HorizontalLayout main = new HorizontalLayout(grid, form);
-        main.setAlignItems(Alignment.START);
-        main.setSizeFull();
 
         // add select event
         grid.asSingleSelect().addValueChangeListener(event -> {
             form.setCustomer(event.getValue());
         });
 
-        add(toolbar, main);
+        // filter text
+        HorizontalLayout filtering = new HorizontalLayout(filterInput, clearBtn); // filterInput, clearBtn
+
+        // page main section
+        HorizontalLayout main = new HorizontalLayout(grid, form); // grid, form
+        main.setAlignItems(Alignment.START);
+        main.setSizeFull();
+
+        // page toolbar
+        HorizontalLayout toolbar = new HorizontalLayout(filtering, addBtn); // filtering, addBtn
+
+        add(toolbar, main); // toolbar, main
+
         setHeight("100vh");
         updateList();
     }
 
     public void updateList() {
-        grid.setItems(customerService.findAll(filterText.getValue()));
+        grid.setItems(customerService.findAll(filterInput.getValue()));
     }
 
     public CustomerService getCustomerService() {

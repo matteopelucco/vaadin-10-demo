@@ -16,7 +16,7 @@ public class CustomView extends VerticalLayout {
 
     public CustomView() {
 
-        MyCustomComponent comp = new MyCustomComponent("this is my value 3");
+        MyCustomComponent comp = new MyCustomComponent("this is my value");
 
         add(comp);
         setClassName("main-layout");
