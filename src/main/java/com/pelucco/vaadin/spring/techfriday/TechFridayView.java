@@ -11,7 +11,7 @@ public class TechFridayView extends VerticalLayout {
 
     public TechFridayView() {
 
-        add(new Paragraph("Hello World!"));
+        add(new Label("Hello World!"));
         add(new Button("Click me!", evt -> {
             add(new Label("Button clicked!"));
         }));
