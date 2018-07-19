@@ -1,0 +1,28 @@
+<!-- Dependency resources -->
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<!-- Defines the example-template element -->
+<dom-module id="smartbutton-template">
+    <template>
+        <div>Click here to complete your action
+            <vaadin-button on-click="handleClick">Click</vaadin-button>
+        </div>
+        <div>{{value}}</div>
+    </template>
+
+    <!-- Polymer boilerplate to register the example-template element -->
+    <script>
+        class SmartButtonTemplate extends Polymer.Element {
+            static get is() {
+                return 'smartbutton-template'
+            }
+
+            handleClick() {
+                this.value = "searching...";
+            }
+
+        }
+
+        customElements.define(SmartButtonTemplate.is, SmartButtonTemplate);
+    </script>
+</dom-module>
