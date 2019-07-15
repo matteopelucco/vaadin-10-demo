@@ -16,7 +16,7 @@ public class MainView extends VerticalLayout {
 
     public MainView(@Autowired ExampleTemplate template) {
         // This is just a simple label created via Elements API
-        Button button = new Button("Click me",
+        Button button = new Button("Touch me please",
                 event -> template.setValue("Clicked!"));
         // This is a simple template example
         add(button, template);
